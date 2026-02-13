@@ -60,7 +60,23 @@
 
     <script>
         let currentLength = 12;
-        const words = ["Swift", "Silent", "Brave", "Calm", "Ocean", "Mountain", "River", "Forest", "Cosmic", "Solar", "Lunar", "Star", "Nebula", "Orbit", "Planet", "Comet", "Falcon", "Eagle", "Hawk", "Owl", "Tiger", "Lion", "Wolf", "Bear", "Ruby", "Emerald", "Sapphire", "Gold", "Silver", "Crystal", "Opal", "Jade"];
+        // Expanded word list
+        const words = [
+            "Swift", "Silent", "Brave", "Calm", "Ocean", "Mountain", "River", "Forest", 
+            "Cosmic", "Solar", "Lunar", "Star", "Nebula", "Orbit", "Planet", "Comet", 
+            "Falcon", "Eagle", "Hawk", "Owl", "Tiger", "Lion", "Wolf", "Bear", 
+            "Ruby", "Emerald", "Sapphire", "Gold", "Silver", "Crystal", "Opal", "Jade",
+            "Thunder", "Storm", "Frost", "Flame", "Shadow", "Spark", "Glacier", "Desert",
+            "Valley", "Canyon", "Island", "Summit", "Zenith", "Horizon", "Galaxy", "Portal",
+            "Matrix", "Vector", "Binary", "Cipher", "Carbon", "Silicon", "Quartz", "Nickel",
+            "Copper", "Python", "Cobalt", "Chrome", "Titan", "Atlas", "Omega", "Alpha",
+            "Bridge", "Castle", "Tower", "Shield", "Sword", "Anchor", "Beacon", "Compass",
+            "Fossil", "Meteor", "Rocket", "Signal", "Switch", "System", "Theory", "Visual",
+            "Vortex", "Winter", "Spring", "Summer", "Autumn", "Garden", "Willow", "Bonsai",
+            "Spruce", "Cedar", "Orchid", "Cactus", "Panda", "Koala", "Otter", "Dolphin",
+            "Whale", "Turtle", "Phoenix", "Dragon", "Griffin", "Legend", "Legacy", "Prism",
+            "Spirit", "Mystic", "Secret", "Hybrid", "Action", "Active", "Bright", "Global"
+        ];
         const symbols = "!@$?*+-=";
         const numbers = "0123456789";
         const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -85,13 +101,11 @@
         function generate() {
             let pass = "";
             if (currentLength === 8) {
-                // Rule: 8 char random
                 const all = alpha + numbers + symbols;
                 for (let i = 0; i < 8; i++) {
                     pass += all.charAt(Math.floor(Math.random() * all.length));
                 }
             } else {
-                // Rule: 12/15 char words
                 let w1 = words[Math.floor(Math.random() * words.length)];
                 let w2 = words[Math.floor(Math.random() * words.length)];
                 while(w1 === w2) w2 = words[Math.floor(Math.random() * words.length)];
@@ -105,7 +119,7 @@
                     base = base.substring(0, targetTextLen);
                 } else {
                     while (base.length < targetTextLen) {
-                        base += alpha.charAt(Math.floor(Math.random() * 26));
+                        base += alpha.charAt(Math.floor(Math.random() * 26)).toLowerCase();
                     }
                 }
                 pass = base + num + sym;
@@ -127,7 +141,6 @@
             setTimeout(() => toast.style.opacity = "0", 2000);
         }
 
-        // Init
         window.onload = generate;
     </script>
 </body>
