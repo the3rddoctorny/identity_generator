@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Identity Gen</title>
+    <title>Identity Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap');
@@ -15,14 +15,19 @@
 <body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
 
     <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden">
-        <!-- Header -->
-        <div class="p-6 border-b border-slate-700 text-center bg-slate-800/50">
+        <div class="p-6 border-b border-slate-700 bg-slate-800/50">
             <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                 Identity Generator
             </h1>
+            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-slate-400 font-medium">
+                <span>Day of Year:</span>
+                <span id="dayOfYearDisplay" class="text-emerald-400 font-bold mono">---</span>
+                <button onclick="copyToClipboard('dayOfYearDisplay')" class="hover:text-emerald-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+            </div>
         </div>
 
-        <!-- Navigation Tabs -->
         <div class="flex border-b border-slate-700 bg-slate-800/30">
             <button onclick="switchTab('password')" id="passTab" class="flex-1 py-3 text-sm font-semibold transition-all tab-active">Password</button>
             <button onclick="switchTab('username')" id="userTab" class="flex-1 py-3 text-sm font-semibold text-slate-400 hover:text-slate-200 transition-all">Username</button>
@@ -30,7 +35,6 @@
 
         <div class="p-6 space-y-6">
             
-            <!-- PASSWORD SECTION -->
             <div id="passwordSection" class="space-y-6">
                 <div class="relative group">
                     <div class="w-full bg-slate-900 rounded-xl p-4 min-h-[64px] flex items-center justify-between border border-slate-700">
@@ -62,7 +66,6 @@
                 </button>
             </div>
 
-            <!-- USERNAME SECTION -->
             <div id="usernameSection" class="hidden space-y-6">
                 <div class="relative group">
                     <div class="w-full bg-slate-900 rounded-xl p-4 min-h-[64px] flex items-center justify-between border border-slate-700">
@@ -95,6 +98,15 @@
         const symbols = "!@$?*+-=";
         const numbers = "0123456789";
         const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        function updateDayOfYear() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const day = Math.floor(diff / oneDay);
+            document.getElementById('dayOfYearDisplay').innerText = day;
+        }
 
         function switchTab(tab) {
             const passSec = document.getElementById('passwordSection');
@@ -183,7 +195,10 @@
             setTimeout(() => toast.style.opacity = "0", 2000);
         }
 
-        window.onload = generatePassword;
+        window.onload = function() {
+            updateDayOfYear();
+            generatePassword();
+        };
     </script>
 </body>
 </html>
